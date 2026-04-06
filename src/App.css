@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+
+:root {
+  --bg: #000000;
+  --card: rgba(18, 18, 20, 0.9);
+  --accent: #007AFF; /* iOS Blue */
+  --border: rgba(255, 255, 255, 0.08);
+  --text-main: #FFFFFF;
+  --text-dim: #86868b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--text-main);
+  /* Deep top-down gradient for depth */
+  background-image: radial-gradient(circle at 50% -20%, #1c1c1e 0%, #000 100%);
+  background-attachment: fixed;
+  padding: 20px 16px env(safe-area-inset-bottom) 16px;
+}
+
+.app-container {
+  max-width: 440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Glass Card Styling */
+.glass-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 24px;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+}
+
+.dashboard-hero {
+  background: linear-gradient(180deg, #1c1c1e 0%, #000 100%);
+  text-align: center;
+  padding: 48px 24px;
+}
+
+/* Typography */
+.label-tiny {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.huge-display {
+  font-size: 6.5rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: #fff;
+  margin: 8px 0;
+}
+
+/* Inputs & Form Elements */
+input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 17px;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-add {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Grid Layouts */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+/* Scroll Areas */
+.plate-scroll {
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.plate-scroll::-webkit-scrollbar { display: none; }
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
