@@ -15,6 +15,11 @@ export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [selectedFood, setSelectedFood] = useState(null);
   const [portionGrams, setPortionGrams] = useState(100);
+  const [showCustomForm, setShowCustomForm] = useState(false);
+  const [customName, setCustomName] = useState('');
+  const [customCarbs, setCustomCarbs] = useState('');
+  const [customKcal, setCustomKcal] = useState('');
+  const [customPortion, setCustomPortion] = useState(100);
 
   // --- AUTO-SUGGEST ENGINE ---
   useEffect(() => {
@@ -93,6 +98,55 @@ export default function App() {
                 <div style={{fontSize:'11px', color:'var(--accent)'}}>{s.carbs.toFixed(1)}g Carbs/100g</div>
               </div>
             ))}
+          </div>
+        )}
+
+        {searchQuery.length > 2 && !selectedFood && !isSearching && suggestions.length === 0 && (
+          <div style={{marginTop:'16px', padding:'18px', background:'#19191b', borderRadius:'18px', border:'1px solid var(--border)'}}>
+            {!showCustomForm ? (
+              <button className="btn-add" style={{width:'100%'}} onClick={() => {
+                setCustomName(searchQuery);
+                setCustomCarbs('');
+                setCustomKcal('');
+                setCustomPortion(100);
+                setShowCustomForm(true);
+              }}>
+                Add custom food
+              </button>
+            ) : (
+              <div style={{display:'grid', gap:'12px'}}>
+                <input type="text" value={customName} onChange={e => setCustomName(e.target.value)} placeholder="Food name" style={{width:'100%'}} />
+                <input type="number" value={customCarbs} onChange={e => setCustomCarbs(e.target.value)} placeholder="Carbs per 100g" style={{width:'100%'}} />
+                <input type="number" value={customKcal} onChange={e => setCustomKcal(e.target.value)} placeholder="Calories per 100g" style={{width:'100%'}} />
+                <input type="number" value={customPortion} onChange={e => setCustomPortion(e.target.value)} placeholder="Portion (grams)" style={{width:'100%'}} />
+                <div style={{display:'flex', gap:'10px'}}>
+                  <button className="btn-add" style={{flex:1}} onClick={() => {
+                    const carbs = Number(customCarbs) || 0;
+                    const kcal = Number(customKcal) || 0;
+                    const portion = Number(customPortion) || 100;
+                    const factor = portion / 100;
+                    setCurrentPlate([...currentPlate, {
+                      id: Date.now(),
+                      name: customName || searchQuery,
+                      carbs: carbs * factor,
+                      kcal: kcal * factor,
+                      weight: portion
+                    }]);
+                    setShowCustomForm(false);
+                    setSearchQuery('');
+                    setCustomName('');
+                    setCustomCarbs('');
+                    setCustomKcal('');
+                    setCustomPortion(100);
+                  }}>
+                    Add product
+                  </button>
+                  <button style={{flex:1, background:'none', border:'1px solid var(--border)', borderRadius:'16px', color:'#ff453a'}} onClick={() => setShowCustomForm(false)}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
